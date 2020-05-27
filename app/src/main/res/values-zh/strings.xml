@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">闹钟</string>
+    <string name="action_settings">设置</string>
+    <string name="first_fragment_label">1</string>
+    <string name="second_fragment_label">2</string>
+    <string name="next">下一个</string>
+    <string name="previous">上一个</string>
+    <string name="hello_first_fragment">第一</string>
+    <string name="hello_second_fragment">第二</string>
+</resources>
