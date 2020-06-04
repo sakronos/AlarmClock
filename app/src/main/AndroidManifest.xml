@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.alarmclock">
 
-    <uses-permission android:name="android.permission.SET_TIME_ZONE"
-        tools:ignore="ProtectedPermissions" />
+    <permission android:name="android.permission.SET_TIME_ZONE" />
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".BellRingsActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -23,6 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".AlarmBroadcast"
+            android:process=":remote" />
     </application>
 
 </manifest>
