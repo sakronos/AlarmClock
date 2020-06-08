@@ -47,7 +47,13 @@
         android:id="@+id/btn_alarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Set Alarm" />
+        android:text="Set AlarmBell" />
+
+    <Button
+        android:id="@+id/btn_alarm_stop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel AlarmBell" />
 
 
 </LinearLayout>
