@@ -168,7 +168,7 @@ public class FirstFragment extends Fragment {
     private void setAlarm(Calendar calendar) {
         //alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (1000 * 5), pendingIntent);
         //alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-
+        alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
         //alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(),AlarmManager.INTERVAL_DAY,pendingIntent);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 60000, pendingIntent);
         showTime.setText(new SimpleDateFormat("HH:mm", Locale.CHINA).format(calendar.getTime()));
