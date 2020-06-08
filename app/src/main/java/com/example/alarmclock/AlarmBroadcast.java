@@ -15,7 +15,7 @@ public class AlarmBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if ("startAlarm".equals(intent.getAction())) {
-            Toast.makeText(context, "Alarm Clock", Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, "Alarm Clock", Toast.LENGTH_LONG).show();
 
             Intent bell_intent = new Intent(context, BellRingsActivity.class);
             bell_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
