@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Vibrator;
@@ -138,9 +139,13 @@ public class FirstFragment extends Fragment {
         });
 
 
-        Intent intent = new Intent(getContext(), AlarmBroadcast.class);
-        intent.setAction("startAlarm");
-        pendingIntent = PendingIntent.getBroadcast(getContext(), 110, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Intent intent = new Intent(getContext(),OrderedBroadcastForwarder.class);
+        //intent.putExtra(OrderedBroadcastForwarder.ACTION_NAME, "com.example.alarmbell.startAlarm");
+        pendingIntent = pendingIntent = PendingIntent.getBroadcast(getContext(), 110, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+//        Intent intent = new Intent(getContext(), AlarmBroadcast.class);
+//        intent.setAction("startAlarm");
+//        pendingIntent = PendingIntent.getBroadcast(getContext(), 110, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 
         Button cancel_AlarmClock = view.findViewById(R.id.btn_alarm_stop);

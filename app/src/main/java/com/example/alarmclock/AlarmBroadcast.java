@@ -14,7 +14,7 @@ public class AlarmBroadcast extends BroadcastReceiver {
     @SuppressLint("ShowToast")
     @Override
     public void onReceive(Context context, Intent intent) {
-        if ("startAlarm".equals(intent.getAction())) {
+        if ("com.example.alarmbell.startAlarm".equals(intent.getAction())) {
             //Toast.makeText(context, "Alarm Clock", Toast.LENGTH_LONG).show();
 
             Intent bell_intent = new Intent(context, BellRingsActivity.class);

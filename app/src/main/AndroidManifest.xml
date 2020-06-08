@@ -3,6 +3,7 @@
     package="com.example.alarmclock">
 
     <permission android:name="android.permission.SET_TIME_ZONE" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -16,6 +17,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <receiver
+            android:name=".OrderedBroadcastForwarder"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.example.alarmbell.FORWARD_AS_ORDERED_BROADCAST"/>
+            </intent-filter>
+        </receiver>
+
         <activity android:name=".BellRingsActivity" />
         <activity
             android:name=".MainActivity"
@@ -30,7 +40,12 @@
 
         <receiver
             android:name=".AlarmBroadcast"
-            android:process=":remote" />
+            android:process=":remote"
+            android:exported="false">
+            <intent-filter android:priority="1">
+                <action android:name="com.example.alarmbell.startAlarm"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
