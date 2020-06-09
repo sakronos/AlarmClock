@@ -17,14 +17,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <receiver
+            android:name=".BlockBroadcast"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="100">
+                <action android:name="startAlarm" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".AlarmBroadcast"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter android:priority="10">
+                <action android:name="startAlarm" />
+            </intent-filter>
+        </receiver>
         <receiver
             android:name=".OrderedBroadcastForwarder"
             android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.example.alarmbell.FORWARD_AS_ORDERED_BROADCAST"/>
-            </intent-filter>
-        </receiver>
+            android:exported="false"/>
 
         <activity android:name=".BellRingsActivity" />
         <activity
@@ -37,15 +51,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver
-            android:name=".AlarmBroadcast"
-            android:process=":remote"
-            android:exported="false">
-            <intent-filter android:priority="1">
-                <action android:name="com.example.alarmbell.startAlarm"/>
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

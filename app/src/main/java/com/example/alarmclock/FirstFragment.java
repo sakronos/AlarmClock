@@ -2,6 +2,9 @@ package com.example.alarmclock;
 
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -49,6 +53,8 @@ public class FirstFragment extends Fragment {
     private WheelView selectHour;
     private WheelView selectMinute;
     SQLiteDatabase db;
+    private String channelID = "1";
+    private  String channelName = "AlarmBlock";
 
 
     @Override
@@ -131,7 +137,7 @@ public class FirstFragment extends Fragment {
                 alarmBellTime.save();
                 //List<AlarmBellTime> alarmBellTimeList = LitePal.findAll(AlarmBellTime.class);
 
-                Snackbar.make(v, new SimpleDateFormat("闹钟设置为"+"HH:mm", Locale.CHINA).format(calendar.getTime()), Snackbar.LENGTH_LONG)
+                Snackbar.make(v, new SimpleDateFormat("闹钟设置为" + "HH:mm", Locale.CHINA).format(calendar.getTime()), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
 
 
@@ -139,9 +145,9 @@ public class FirstFragment extends Fragment {
         });
 
 
-        Intent intent = new Intent(getContext(),OrderedBroadcastForwarder.class);
+        Intent intent = new Intent(getContext(), OrderedBroadcastForwarder.class);
         //intent.putExtra(OrderedBroadcastForwarder.ACTION_NAME, "com.example.alarmbell.startAlarm");
-        pendingIntent = pendingIntent = PendingIntent.getBroadcast(getContext(), 110, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        pendingIntent = PendingIntent.getBroadcast(getContext(), 110, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 //        Intent intent = new Intent(getContext(), AlarmBroadcast.class);
 //        intent.setAction("startAlarm");
@@ -179,5 +185,20 @@ public class FirstFragment extends Fragment {
         showTime.setText(new SimpleDateFormat("HH:mm", Locale.CHINA).format(calendar.getTime()));
         //Toast.makeText(getContext(), "设置成功", Toast.LENGTH_SHORT).show();
 
+        Intent blockIntent = new Intent(getContext(),BlockBroadcast.class);
+        blockIntent.setAction("Block");
+        PendingIntent blockPendingIntent = PendingIntent.getBroadcast(getContext(),0,blockIntent,0);
+
+        NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel notificationChannel = new NotificationChannel(channelID,channelName,NotificationManager.IMPORTANCE_HIGH);
+        notificationManager.createNotificationChannel(notificationChannel);
+        Notification notification = new NotificationCompat.Builder(getContext(),channelID)
+                .setContentTitle("闹钟")
+                .setContentText(new SimpleDateFormat("闹钟设置为" + "HH:mm", Locale.CHINA).format(calendar.getTime()))
+                .setWhen(System.currentTimeMillis())            //此处待修改为闹钟响起前1H
+                .setSmallIcon(R.drawable.ic_launcher_background)
+                .addAction(R.drawable.ic_launcher_foreground,"Cancel once",blockPendingIntent)
+                .build();
+        notificationManager.notify(1,notification);
     }
 }
