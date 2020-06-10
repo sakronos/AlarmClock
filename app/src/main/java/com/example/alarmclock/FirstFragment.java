@@ -46,7 +46,12 @@ import static androidx.core.content.ContextCompat.getSystemService;
 
 public class FirstFragment extends Fragment {
 
-    private AlarmManager alarmManager;
+    public AlarmManager alarmManager;
+
+    public AlarmManager getAlarmManager() {
+        return alarmManager;
+    }
+
     private PendingIntent pendingIntent;
     private TextView showTime;
     private Calendar calendar;
@@ -112,7 +117,7 @@ public class FirstFragment extends Fragment {
         });
 
         db = LitePal.getDatabase();
-        List<AlarmBellTime> alarmBellTimeList = LitePal.findAll(AlarmBellTime.class);
+        final List<AlarmBellTime> alarmBellTimeList = LitePal.findAll(AlarmBellTime.class);
         if (!alarmBellTimeList.isEmpty()) {
             showTime.setText(new SimpleDateFormat("HH:mm:ss", Locale.CHINA).format(alarmBellTimeList.get(0).getAlarm_time()));
             calendar.set(Calendar.HOUR_OF_DAY, alarmBellTimeList.get(0).getAlarm_time().getHours());
@@ -166,6 +171,16 @@ public class FirstFragment extends Fragment {
                 showTime.setText("");
             }
         });
+
+        Button skip_Alarm = view.findViewById(R.id.stop_alarm_once);
+        skip_Alarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (alarmManager != null){
+                    //alarmManager.cancel(pendingIntent);
+                }
+            }
+        });
     }
 
     private void updateTimeOnScroll() {
@@ -187,7 +202,8 @@ public class FirstFragment extends Fragment {
 
         Intent blockIntent = new Intent(getContext(),BlockBroadcast.class);
         blockIntent.setAction("Block");
-        PendingIntent blockPendingIntent = PendingIntent.getBroadcast(getContext(),0,blockIntent,0);
+        blockIntent.putExtra("alarmIntent",pendingIntent);
+        PendingIntent blockPendingIntent = PendingIntent.getBroadcast(getContext(),110,blockIntent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationChannel notificationChannel = new NotificationChannel(channelID,channelName,NotificationManager.IMPORTANCE_HIGH);

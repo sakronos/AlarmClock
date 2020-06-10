@@ -57,5 +57,11 @@
         android:layout_height="wrap_content"
         android:text="Cancel AlarmBell" />
 
+    <Button
+        android:id="@+id/stop_alarm_once"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Skip Alarm" />
+
 
 </LinearLayout>
