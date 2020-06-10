@@ -139,6 +139,7 @@ public class FirstFragment extends Fragment {
                 AlarmBellTime alarmBellTime = new AlarmBellTime();
                 alarmBellTime.setAlarm_time(calendar.getTime());
                 alarmBellTime.setName("name");
+                alarmBellTime.setSkip(false);
                 alarmBellTime.save();
                 //List<AlarmBellTime> alarmBellTimeList = LitePal.findAll(AlarmBellTime.class);
 
@@ -200,9 +201,9 @@ public class FirstFragment extends Fragment {
         showTime.setText(new SimpleDateFormat("HH:mm", Locale.CHINA).format(calendar.getTime()));
         //Toast.makeText(getContext(), "设置成功", Toast.LENGTH_SHORT).show();
 
-        Intent blockIntent = new Intent(getContext(),BlockBroadcast.class);
+        Intent blockIntent = new Intent(getContext(),ToBlockReceiver.class);
         blockIntent.setAction("Block");
-        blockIntent.putExtra("alarmIntent",pendingIntent);
+        //blockIntent.putExtra("alarmIntent",pendingIntent);
         PendingIntent blockPendingIntent = PendingIntent.getBroadcast(getContext(),110,blockIntent,PendingIntent.FLAG_CANCEL_CURRENT);
 
         NotificationManager notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);

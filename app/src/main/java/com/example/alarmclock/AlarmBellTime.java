@@ -10,6 +10,15 @@ public class AlarmBellTime extends LitePalSupport {
     @Column(nullable = false)
     private Date alarm_time;
     private String name;
+    private boolean skip;
+
+    public boolean isSkip() {
+        return skip;
+    }
+
+    public void setSkip(boolean skip) {
+        this.skip = skip;
+    }
 
     public String getName() {
         return name;
